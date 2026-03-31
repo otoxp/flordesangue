@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flores de Sangue - Premium</title>
+
+<style>
+    :root {
+        --cor-primaria: #b30000;
+        --bg-body: #0a0a0a;
+        --bg-card: #161616;
+        --texto: #ffffff;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: var(--bg-body);
+        color: var(--texto);
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: linear-gradient(to bottom, #1a1a1a, var(--bg-body));
+        padding: 30px 20px;
+        text-align: center;
+        border-bottom: 2px solid var(--cor-primaria);
+    }
+
+    .container {
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .busca-container {
+        position: sticky;
+        top: 15px;
+        z-index: 100;
+        margin-bottom: 30px;
+    }
+
+    input {
+        width: 100%;
+        padding: 15px 25px;
+        border-radius: 50px;
+        border: 1px solid #333;
+        background: rgba(30, 30, 30, 0.95);
+        color: #fff;
+        font-size: 18px;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .mosaico {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        background: var(--bg-card);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid #222;
+        position: relative;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        border-color: var(--cor-primaria);
+        box-shadow: 0 10px 20px rgba(179, 0, 0, 0.2);
+    }
+
+    .capa-container {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        background: #222;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .capa-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Badge do Episódio */
+    .badge-ep {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--cor-primaria);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .info {
+        padding: 15px;
+        text-align: center;
+        font-weight: bold;
+        background: linear-gradient(to top, #000, transparent);
+    }
+
+    .hidden { display: none !important; }
+
+    /* Texto de fallback caso a imagem falhe */
+    .img-error-text {
+        position: absolute;
+        padding: 10px;
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌹 Flores de Sangue</h1>
+</header>
+
+<div class="container">
+    <div class="busca-container">
+        <input type="text" id="busca" placeholder="🔎 Digite o número do episódio...">
+    </div>
+
+    <div id="grid-episodios" class="mosaico"></div>
+</div>
+
+<script>
+// Nova imagem mais estável
+const URL_CAPA = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/3S5E16W81t8M4B11fA1L66lD4yG.jpg";
+
+const links = [
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-434/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-433/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-432/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-431/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-430/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-429/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-428/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-427/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-426/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-425/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-424/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-423/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-422/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-421/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-420/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-419/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-418/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-417/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-416/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-415/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-414/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-413/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-412/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-411/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-410/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-409/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-408/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-407/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-406/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-405/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-404/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-403/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-402/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-401/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-400/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-399/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-398/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-397/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-396/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-395/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-394/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-393/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-392/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-391/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-390/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-389/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-388/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-387/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-386/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-385/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-384/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-383/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-382/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-381/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-380/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-379/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-378/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-377/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-376/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-375/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-374/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-373/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-372/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-371/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-370/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-369/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-368/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-367/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-366/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-365/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-364/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-363/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-362/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-361/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-360/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-359/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-358/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-357/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-356/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-355/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-354/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-353/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-352/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-351/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-350/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-349/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-348/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-347/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-346/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-345/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-344/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-343/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-342/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-341/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-340/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-339/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-338/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-337/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-336/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-335/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-334/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-333/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-332/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-331/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-330/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-329/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-328/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-327/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-326/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-325/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-324/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-323/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-322/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-321/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-320/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-319/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-318/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-317/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-316/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-315/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-314/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-313/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-312/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-311/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-310/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-309/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-308/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-307/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-306/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-305/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-304/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-303/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-302/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-301/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-300/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-299/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-298/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-297/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-296/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-295/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-294/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-293/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-292/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-291/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-290/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-289/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-288/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-287/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-286/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-285/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-284/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-283/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-282/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-281/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-280/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-279/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-278/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-277/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-276/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-275/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-274/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-273/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-272/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-271/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-270/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-269/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-268/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-267/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-266/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-265/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-264/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-263/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-262/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-261/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-260/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-259/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-258/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-257/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-256/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-255/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-254/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-253/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-252/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-251/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-250/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-249/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-248/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-247/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-246/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-245/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-244/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-243/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-242/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-241/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-240/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-239/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-238/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-237/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-236/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-235/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-234/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-233/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-232/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-231/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-230/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-229/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-228/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-227/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-226/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-225/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-224/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-223/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-222/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-221/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-220/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-219/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-218/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-217/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-216/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-215/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-214/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-213/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-212/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-211/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-210/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-209/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-208/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-207/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-206/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-205/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-204/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-203/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-202/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-201/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-200/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-199/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-198/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-197/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-196/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-195/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-194/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-193/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-192/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-191/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-190/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-189/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-188/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-187/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-186/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-185/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-184/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-183/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-182/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-181/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-180/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-179/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-178/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-177/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-176/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-175/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-174/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-173/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-172/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-171/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-170/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-169/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-168/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-167/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-166/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-165/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-164/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-163/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-162/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-161/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-160/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-159/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-158/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-157/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-156/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-155/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-154/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-153/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-152/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-151/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-150/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-149/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-148/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-147/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-146/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-145/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-144/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-143/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-142/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-141/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-140/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-139/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-138/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-137/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-136/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-135/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-134/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-133/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-132/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-131/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-130/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-129/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-128/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-127/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-126/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-125/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-124/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-123/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-122/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-121/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-120/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-119/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-118/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-117/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-116/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-115/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-114/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-113/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-112/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-111/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-110/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-109/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-108/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-107/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-106/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-105/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-104/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-103/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-102/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-101/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-100/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-99/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-98/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-97/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-96/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-95/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-94/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-93/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-92/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-91/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-90/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-89/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-88/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-87/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-86/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-85/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-84/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-83/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-82/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-81/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-80/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-79/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-78/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-77/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-76/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-75/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-74/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-73/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-72/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-71/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-70/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-69/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-68/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-67/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-66/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-65/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-64/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-63/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-62/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-61/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-60/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-59/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-58/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-57/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-56/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-55/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-54/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-53/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-52/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-51/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-50/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-49/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-48/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-47/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-46/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-45/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-44/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-43/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-42/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-41/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-40/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-39/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-38/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-37/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-36/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-35/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-34/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-33/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-32/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-31/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-30/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-29/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-28/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-27/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-26/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-25/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-24/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-23/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-22/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-21/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-20/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-19/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-18/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-17/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-16/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-15/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-14/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-13/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-12/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-11/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-10/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-9/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-8/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-7/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-6/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-5/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-4/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-3/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-2/",
+"https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-1/"
+];
+
+const grid = document.getElementById("grid-episodios");
+
+function renderizar() {
+    grid.innerHTML = "";
+    links.forEach(link => {
+        const match = link.match(/capitulo-(\d+)/);
+        if (match) {
+            const num = match[1];
+            const card = document.createElement("a");
+            card.href = link;
+            card.target = "_blank";
+            card.className = "card";
+            card.setAttribute("data-ep", num);
+
+            // Estrutura do card com sistema de fallback (onerror)
+            card.innerHTML = `
+                <div class="capa-container">
+                    <span class="img-error-text">Flores de Sangue<br>Episódio ${num}</span>
+                    <img src="${URL_CAPA}" 
+                         alt="Capa Episódio ${num}" 
+                         onerror="this.style.display='none'">
+                    <div class="badge-ep">EP ${num}</div>
+                </div>
+                <div class="info">Assistir</div>
+            `;
+            grid.appendChild(card);
+        }
+    });
+}
+
+renderizar();
+
+// Lógica de Busca
+document.getElementById("busca").addEventListener("input", function() {
+    const termo = this.value.trim();
+    document.querySelectorAll(".card").forEach(card => {
+        const ep = card.getAttribute("data-ep");
+        card.classList.toggle("hidden", !ep.includes(termo));
+    });
+});
+</script>
+
+</body>
+</html>
