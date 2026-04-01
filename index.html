@@ -1,13 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meryem - Premium Responsivo</title>
+    <title>Arafta - Premium Responsivo</title>
 
     <style>
         :root {
-            --cor-primaria: #0069d9;
+            --cor-primaria: #e67e22; /* Laranja baseado na temática da série */
             --bg-body: #0a0a0a;
             --bg-card: #161616;
             --texto: #ffffff;
@@ -88,8 +89,8 @@
 
         .capa-container {
             width: 100%;
-            aspect-ratio: 2 / 3;
-            background: #222;
+            aspect-ratio: 16 / 9; /* Formato wide para TV */
+            background: #000;
             position: relative;
             display: flex;
             align-items: center;
@@ -101,15 +102,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .img-error-text {
-            position: absolute;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #777;
-            z-index: 1;
         }
 
         .badge-ep {
@@ -135,6 +127,7 @@
 
         .hidden { display: none !important; }
 
+        /* Media Queries */
         @media (min-width: 600px) { .mosaico { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 1024px) { .mosaico { grid-template-columns: repeat(5, 1fr); } }
         @media (min-width: 1600px) { .mosaico { grid-template-columns: repeat(7, 1fr); } }
@@ -143,7 +136,7 @@
 <body>
 
 <header>
-    <h1>🎬 Meryem (Mi Nombre es Meryem)</h1>
+    <h1>🎬 Arafta (En Español)</h1>
 </header>
 
 <div class="container">
@@ -155,104 +148,106 @@
 </div>
 
 <script>
-// Link da capa atualizado
-const URL_CAPA = "https://tbg.seriesturcastv.to/wp-content/uploads/2023/09/mi-nombre-es-meryem-en-espanol.jpg";
+const URL_CAPA = "https://tbg.seriesturcastv.to/wp-content/uploads/2025/11/arafta-en-espanol.jpg";
 
 const links = [
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-94/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-93/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-92/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-91/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-90/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-89/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-88/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-87/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-86/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-85/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-84/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-83/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-82/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-81/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-80/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-79/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-78/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-77/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-76/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-75/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-74/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-73/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-72/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-71/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-70/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-69/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-68/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-67/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-66/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-65/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-64/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-63/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-62/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-61/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-60/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-59/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-58/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-57/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-56/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-55/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-54/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-53/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-52/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-51/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-50/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-49/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-48/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-47/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-46/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-45/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-44/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-43/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-42/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-41/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-40/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-39/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-38/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-37/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-36/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-35/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-34/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-33/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-32/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-31/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-30/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-29/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-28/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-27/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-26/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-25/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-24/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-23/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-22/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-21/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-20/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-19/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-18/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-17/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-16/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-15/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-14/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-13/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-12/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-11/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-10/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-9/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-8/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-7/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-6/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-5/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-4/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-3/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-2/",
-    "https://tbg.seriesturcastv.to/mi-nombre-es-meryem-capitulo-1/"
+    "https://tbg.seriesturcastv.to/arafta-capitulo-97/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-96/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-95/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-94/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-93/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-92/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-91/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-90/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-89/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-88/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-87/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-86/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-85/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-84/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-83/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-82/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-81/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-80/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-79/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-78/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-77/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-76/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-75/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-74/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-73/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-72/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-71/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-70/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-69/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-68/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-67/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-66/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-65/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-64/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-63/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-62/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-61/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-60/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-59/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-58/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-57/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-56/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-55/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-54/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-53/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-52/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-51/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-50/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-49/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-48/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-47/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-46/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-45/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-44/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-43/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-42/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-41/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-40/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-39/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-38/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-37/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-36/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-35/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-34/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-33/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-32/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-31/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-30/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-29/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-28/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-27/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-26/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-25/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-24/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-23/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-22/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-21/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-20/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-19/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-18/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-17/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-16/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-15/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-14/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-13/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-12/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-11/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-10/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-9/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-8/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-7/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-6/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-5/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-4/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-3/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-2/",
+    "https://tbg.seriesturcastv.to/arafta-capitulo-1/"
 ];
 
 const grid = document.getElementById("grid-episodios");
@@ -271,8 +266,7 @@ function renderizar() {
 
             card.innerHTML = `
                 <div class="capa-container">
-                    <span class="img-error-text">Meryem<br>Episódio ${num}</span>
-                    <img src="${URL_CAPA}" alt="Capa ${num}" onerror="this.style.display='none'">
+                    <img src="${URL_CAPA}" alt="Capa ${num}">
                     <div class="badge-ep">EP ${num}</div>
                 </div>
                 <div class="info">ASSISTIR</div>
