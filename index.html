@@ -1,290 +1,158 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arafta - Premium Responsivo</title>
-
+    <title>Vendetta (Kan Cicekleri) - Episódios</title>
     <style>
         :root {
-            --cor-primaria: #e67e22; /* Laranja baseado na temática da série */
-            --bg-body: #0a0a0a;
-            --bg-card: #161616;
-            --texto: #ffffff;
-            --gap-grid: 15px;
+            --primary: #e50914;
+            --bg: #141414;
+            --card-bg: #1f1f1f;
+            --text: #ffffff;
+            --cover: url('https://i.ytimg.com/vi/Jz_8dwNNqnQ/hqdefault.jpg');
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-body);
-            color: var(--texto);
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
 
         header {
-            background: linear-gradient(to bottom, #1a1a1a, var(--bg-body));
-            padding: 20px;
+            padding: 60px 20px;
             text-align: center;
-            border-bottom: 2px solid var(--cor-primaria);
+            background: linear-gradient(to bottom, rgba(20,20,20,0.95), rgba(20,20,20,0.7)), var(--cover);
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid #333;
         }
 
-        h1 { margin: 10px 0; font-size: 1.8rem; }
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
 
         .container {
-            padding: 15px;
-            max-width: 1800px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .busca-container {
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            margin-bottom: 25px;
-        }
-
-        input {
-            width: 100%;
-            padding: 15px 20px;
-            border-radius: 50px;
-            border: 2px solid #333;
-            background: rgba(20, 20, 20, 0.9);
-            color: #fff;
-            font-size: 16px;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-            transition: border-color 0.3s;
-        }
-
-        input:focus { outline: none; border-color: var(--cor-primaria); }
-
-        .mosaico {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: var(--gap-grid);
-        }
-
-        .card {
-            background: var(--bg-card);
+        .episode-card {
+            background: var(--card-bg);
             border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s;
             text-decoration: none;
-            color: inherit;
-            border: 1px solid #222;
-            position: relative;
+            color: white;
+            transition: 0.3s;
+            border: 1px solid #333;
             display: flex;
             flex-direction: column;
         }
 
-        .card:hover, .card:focus {
+        .episode-card:hover {
             transform: scale(1.05);
-            border-color: var(--cor-primaria);
-            z-index: 10;
-            outline: none;
+            border-color: var(--primary);
         }
 
-        .capa-container {
+        .thumb {
             width: 100%;
-            aspect-ratio: 16 / 9; /* Formato wide para TV */
-            background: #000;
+            padding-top: 56.25%;
+            background-image: var(--cover);
+            background-size: cover;
+            background-position: center;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
         }
 
-        .capa-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .badge-ep {
+        .ep-number {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            background: var(--cor-primaria);
-            color: white;
-            padding: 4px 10px;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.8);
+            padding: 2px 8px;
             border-radius: 4px;
-            font-weight: bold;
             font-size: 0.8rem;
-            z-index: 2;
+            border: 1px solid var(--primary);
         }
 
         .info {
             padding: 12px;
             text-align: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-            background: #1a1a1a;
         }
 
-        .hidden { display: none !important; }
+        .info h3 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
 
-        /* Media Queries */
-        @media (min-width: 600px) { .mosaico { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1024px) { .mosaico { grid-template-columns: repeat(5, 1fr); } }
-        @media (min-width: 1600px) { .mosaico { grid-template-columns: repeat(7, 1fr); } }
+        /* Estilo para garantir que o link ocupe o card todo */
+        .episode-card { cursor: pointer; }
+
+        @media (max-width: 600px) {
+            .container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 15px; }
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🎬 Arafta (En Español)</h1>
+    <h1>VENDETTA</h1>
+    <p>Coleção Completa - 299 Episódios</p>
 </header>
 
-<div class="container">
-    <div class="busca-container">
-        <input type="number" id="busca" placeholder="🔎 Digite o número do episódio..." inputmode="numeric">
-    </div>
-
-    <div id="grid-episodios" class="mosaico"></div>
-</div>
+<div class="container" id="episodeGrid"></div>
 
 <script>
-const URL_CAPA = "https://tbg.seriesturcastv.to/wp-content/uploads/2025/11/arafta-en-espanol.jpg";
+    const grid = document.getElementById('episodeGrid');
+    
+    // Lista de IDs reais extraídos do seu arquivo para garantir que funcionem
+    // Se o ID não estiver aqui, ele usará o padrão da playlist
+    const specialIds = {
+        1: "Jz_8dwNNqnQ",
+        2: "B4X1TSwdO7o",
+        3: "r9za5Os2FHI",
+        4: "z_7Gqw3asQ4",
+        297: "pgJBO8I1B08",
+        298: "UmkskLm-BUI",
+        299: "Lv4n_hyyAbg"
+    };
 
-const links = [
-    "https://tbg.seriesturcastv.to/arafta-capitulo-97/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-96/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-95/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-94/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-93/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-92/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-91/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-90/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-89/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-88/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-87/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-86/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-85/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-84/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-83/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-82/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-81/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-80/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-79/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-78/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-77/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-76/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-75/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-74/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-73/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-72/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-71/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-70/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-69/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-68/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-67/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-66/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-65/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-64/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-63/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-62/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-61/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-60/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-59/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-58/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-57/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-56/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-55/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-54/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-53/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-52/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-51/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-50/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-49/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-48/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-47/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-46/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-45/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-44/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-43/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-42/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-41/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-40/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-39/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-38/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-37/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-36/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-35/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-34/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-33/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-32/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-31/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-30/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-29/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-28/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-27/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-26/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-25/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-24/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-23/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-22/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-21/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-20/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-19/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-18/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-17/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-16/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-15/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-14/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-13/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-12/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-11/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-10/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-9/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-8/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-7/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-6/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-5/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-4/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-3/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-2/",
-    "https://tbg.seriesturcastv.to/arafta-capitulo-1/"
-];
-
-const grid = document.getElementById("grid-episodios");
-
-function renderizar() {
-    grid.innerHTML = "";
-    links.forEach(link => {
-        const match = link.match(/capitulo-(\d+)/);
-        if (match) {
-            const num = match[1];
-            const card = document.createElement("a");
-            card.href = link;
-            card.target = "_blank";
-            card.className = "card";
-            card.setAttribute("data-ep", num);
-
-            card.innerHTML = `
-                <div class="capa-container">
-                    <img src="${URL_CAPA}" alt="Capa ${num}">
-                    <div class="badge-ep">EP ${num}</div>
-                </div>
-                <div class="info">ASSISTIR</div>
-            `;
-            grid.appendChild(card);
+    for (let i = 1; i <= 299; i++) {
+        // Se temos o ID direto, usamos o link simples (mais compatível)
+        // Se não, usamos o link da playlist que você forneceu
+        let finalLink;
+        if (specialIds[i]) {
+            finalLink = `https://www.youtube.com/watch?v=${specialIds[i]}`;
+        } else {
+            finalLink = `https://www.youtube.com/watch?v=Jz_8dwNNqnQ&list=PLtovlg8WE5tThN5rypWMeRwgVLPeerjRa&index=${i}`;
         }
-    });
-}
 
-renderizar();
-
-document.getElementById("busca").addEventListener("input", function() {
-    const termo = this.value.trim();
-    document.querySelectorAll(".card").forEach(card => {
-        const ep = card.getAttribute("data-ep");
-        card.classList.toggle("hidden", termo !== "" && !ep.includes(termo));
-    });
-});
+        const card = document.createElement('a');
+        card.className = 'episode-card';
+        card.href = finalLink;
+        card.target = "_blank"; // Abre no app do YouTube ou nova aba
+        
+        card.innerHTML = `
+            <div class="thumb">
+                <span class="ep-number">EP ${i}</span>
+            </div>
+            <div class="info">
+                <h3>Capítulo ${i}</h3>
+            </div>
+        `;
+        grid.appendChild(card);
+    }
 </script>
 
 </body>
