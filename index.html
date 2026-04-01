@@ -1,131 +1,167 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flores de Sangue - Premium</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores de Sangue - Premium Responsivo</title>
 
-<style>
-    :root {
-        --cor-primaria: #b30000;
-        --bg-body: #0a0a0a;
-        --bg-card: #161616;
-        --texto: #ffffff;
-    }
+    <style>
+        :root {
+            --cor-primaria: #b30000;
+            --bg-body: #0a0a0a;
+            --bg-card: #161616;
+            --texto: #ffffff;
+            --gap-grid: 15px;
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        background: var(--bg-body);
-        color: var(--texto);
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-body);
+            color: var(--texto);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-    header {
-        background: linear-gradient(to bottom, #1a1a1a, var(--bg-body));
-        padding: 30px 20px;
-        text-align: center;
-        border-bottom: 2px solid var(--cor-primaria);
-    }
+        header {
+            background: linear-gradient(to bottom, #1a1a1a, var(--bg-body));
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--cor-primaria);
+        }
 
-    .container {
-        padding: 20px;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
+        h1 { margin: 10px 0; font-size: 1.8rem; }
 
-    .busca-container {
-        position: sticky;
-        top: 15px;
-        z-index: 100;
-        margin-bottom: 30px;
-    }
+        .container {
+            padding: 15px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
 
-    input {
-        width: 100%;
-        padding: 15px 25px;
-        border-radius: 50px;
-        border: 1px solid #333;
-        background: rgba(30, 30, 30, 0.95);
-        color: #fff;
-        font-size: 18px;
-        box-sizing: border-box;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
+        /* Busca Sticky e Responsiva */
+        .busca-container {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            margin-bottom: 25px;
+        }
 
-    .mosaico {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 25px;
-    }
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: 2px solid #333;
+            background: rgba(20, 20, 20, 0.9);
+            color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s;
+        }
 
-    .card {
-        background: var(--bg-card);
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: inherit;
-        border: 1px solid #222;
-        position: relative;
-    }
+        input:focus {
+            outline: none;
+            border-color: var(--cor-primaria);
+        }
 
-    .card:hover {
-        transform: translateY(-8px);
-        border-color: var(--cor-primaria);
-        box-shadow: 0 10px 20px rgba(179, 0, 0, 0.2);
-    }
+        /* Grid de Episódios Mágico */
+        .mosaico {
+            display: grid;
+            /* Layout padrão: Celulares pequenos */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: var(--gap-grid);
+        }
 
-    .capa-container {
-        width: 100%;
-        aspect-ratio: 2 / 3;
-        background: #222;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        position: relative;
-    }
+        .card {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #222;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .capa-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+        /* Efeito de hover para PC e Foco para Smart TV */
+        .card:hover, .card:focus {
+            transform: scale(1.05);
+            border-color: var(--cor-primaria);
+            z-index: 10;
+            outline: none;
+        }
 
-    /* Badge do Episódio */
-    .badge-ep {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: var(--cor-primaria);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 6px;
-        font-weight: bold;
-        font-size: 14px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
+        .capa-container {
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            background: #222;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .info {
-        padding: 15px;
-        text-align: center;
-        font-weight: bold;
-        background: linear-gradient(to top, #000, transparent);
-    }
+        .capa-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .hidden { display: none !important; }
+        .badge-ep {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: var(--cor-primaria);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
 
-    /* Texto de fallback caso a imagem falhe */
-    .img-error-text {
-        position: absolute;
-        padding: 10px;
-        text-align: center;
-        font-size: 12px;
-        color: #666;
-    }
-</style>
+        .info {
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            background: #1a1a1a;
+        }
+
+        .hidden { display: none !important; }
+
+        /* --- MEDIA QUERIES (A MÁGICA DA RESPONSIVIDADE) --- */
+
+        /* Tablets (Acima de 600px) */
+        @media (min-width: 600px) {
+            .mosaico { grid-template-columns: repeat(3, 1fr); }
+            h1 { font-size: 2.2rem; }
+            .container { padding: 25px; }
+        }
+
+        /* Laptops / PCs (Acima de 1024px) */
+        @media (min-width: 1024px) {
+            .mosaico { grid-template-columns: repeat(5, 1fr); }
+            --gap-grid: 25px;
+            .info { font-size: 1rem; }
+        }
+
+        /* Desktops Grandes e Smart TVs (Acima de 1600px) */
+        @media (min-width: 1600px) {
+            .mosaico { grid-template-columns: repeat(7, 1fr); }
+            input { font-size: 22px; padding: 20px 30px; }
+            h1 { font-size: 3rem; }
+            .info { font-size: 1.2rem; padding: 20px; }
+            .badge-ep { font-size: 1rem; padding: 6px 15px; }
+        }
+
+        /* Ajuste para telas muito pequenas (iPhone SE, etc) */
+        @media (max-width: 380px) {
+            .mosaico { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .info { font-size: 0.8rem; }
+        }
+    </style>
 </head>
 
 <body>
@@ -136,16 +172,16 @@
 
 <div class="container">
     <div class="busca-container">
-        <input type="text" id="busca" placeholder="🔎 Digite o número do episódio...">
+        <input type="number" id="busca" placeholder="🔎 Digite o número do episódio..." inputmode="numeric">
     </div>
 
     <div id="grid-episodios" class="mosaico"></div>
 </div>
 
 <script>
-// Nova imagem mais estável
 const URL_CAPA = "https://tbg.seriesturcastv.to/wp-content/uploads/2023/03/kan-cicekleri-en-espanol.jpg";
 
+// Array de links (mantive sua estrutura original)
 const links = [
 "https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-434/",
 "https://tbg.seriesturcastv.to/kan-cicekleri-capitulo-433/",
@@ -597,16 +633,12 @@ function renderizar() {
             card.className = "card";
             card.setAttribute("data-ep", num);
 
-            // Estrutura do card com sistema de fallback (onerror)
             card.innerHTML = `
                 <div class="capa-container">
-                    <span class="img-error-text">Flores de Sangue<br>Episódio ${num}</span>
-                    <img src="${URL_CAPA}" 
-                         alt="Capa Episódio ${num}" 
-                         onerror="this.style.display='none'">
+                    <img src="${URL_CAPA}" alt="Capa Ep ${num}" loading="lazy">
                     <div class="badge-ep">EP ${num}</div>
                 </div>
-                <div class="info">Assistir</div>
+                <div class="info">ASSISTIR</div>
             `;
             grid.appendChild(card);
         }
@@ -615,12 +647,18 @@ function renderizar() {
 
 renderizar();
 
-// Lógica de Busca
+// Lógica de Busca Otimizada
 document.getElementById("busca").addEventListener("input", function() {
     const termo = this.value.trim();
-    document.querySelectorAll(".card").forEach(card => {
+    const cards = document.querySelectorAll(".card");
+    
+    cards.forEach(card => {
         const ep = card.getAttribute("data-ep");
-        card.classList.toggle("hidden", !ep.includes(termo));
+        if (termo === "" || ep.includes(termo)) {
+            card.classList.remove("hidden");
+        } else {
+            card.classList.add("hidden");
+        }
     });
 });
 </script>
